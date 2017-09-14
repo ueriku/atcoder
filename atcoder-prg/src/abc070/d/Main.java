@@ -16,8 +16,11 @@ public class Main {
         new Main().calc();
     }
     
+    // 木構造を表すリスト。
+    // i番目のリストに入っているMapは，町iから伸びる辺を著す。 
+    // MapのKeyは辺が続く町で，Valueは距離を示す。
     ArrayList<TreeMap<Integer, Long>> treeList = new ArrayList<TreeMap<Integer,Long>>();
-    // dist[i]: iからKへの最短距離
+    // dist[i]: 町iから町Kへの最短距離
     long[] dist;
 
     public void calc() {
@@ -42,11 +45,12 @@ public class Main {
             y[i] = in.nextInt() - 1;
         }
 
-
+        // treeListの初期化
         for (int i = 0; i < N; i++) {
             treeList.add(new TreeMap<Integer, Long>());
         }
         
+        // 道の情報をtreeList（の中のMap）に入れていく
         for (int i = 0; i < N-1; i++) {
             treeList.get(a[i]).put(b[i], c[i]);
             treeList.get(b[i]).put(a[i], c[i]);
@@ -64,8 +68,10 @@ public class Main {
     }
     
     // 町Kから順に深さ優先探索を実施して，Kから各町への最短距離を求める
-    // dist[to]は町Kから町toへの距離を表す。
-    // 
+    // 引数によって，前の町はfrom，現在の町はtoであり，ここまで距離len掛かっていることを表す。
+    // 町Kから現在地toまでの距離dist[to]を距離lenで初期化し，
+    // 次の町への道をtreeListから取得して再帰を行う。
+    // 再帰を行う際に町fromへ戻ってしまうと無限ループに陥るので，その前に来た道を除外している。
     void dfs(int from, int to, long len) {
         // toへの距離をlenで初期化
         dist[to] = len;

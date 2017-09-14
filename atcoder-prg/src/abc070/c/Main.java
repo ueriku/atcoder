@@ -14,10 +14,12 @@ public class Main {
         new Main().calc();
     }
     
+    // 最小公倍数を求める
     private long lcm(long a, long b) {
         return a / gcd(a, b) * b;
     }
     
+    // 最大公約数を求める
     private long gcd(long a, long b) {
         if (a > b) {
             return gcd(b, a);
