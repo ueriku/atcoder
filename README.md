@@ -1,1 +1,1 @@
-# atcoder
+AtCoderのコンテスト格納用
